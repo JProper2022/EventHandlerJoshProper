@@ -1,0 +1,89 @@
+﻿@model ManageEventViewModel
+
+@{
+    ViewData["Title"] = "Manage Event";
+    // var enrollmentStatusMap = new Dictionary<Guest.EnrollmentConfirmationStatus, string>
+    // {
+    //     [Guest.EnrollmentConfirmationStatus.ConfirmationMessageNotSent] = "Invite yet to arrive",
+    //     [Guest.EnrollmentConfirmationStatus.ConfirmationMessageSent] =  "Invite sent",
+    //     [Guest.EnrollmentConfirmationStatus.EnrollmentConfirmed] =  "Accepted",
+    //     [Guest.EnrollmentConfirmationStatus.EnrollmentDeclined] =  "Declined"
+    // };
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="AllEvents">All Events</a>
+    <a asp-action="AddEvent">Add an Event</a>
+    <a asp-action="EditEvent" asp-route-eventId = "1">Edit this event</a>
+</p>
+
+<h4>Course Summary</h4>
+<p>The event @Model.Event.Name is in room @Model.Event.RoomNum starting on @Model.Event.Date.ToShortDateString() and the host is @Model.Event.Host.</p>
+
+<div class="row">
+    <div class="col">Invites not sent: @Model.CountConfirmationMessageNotSent</div>
+    <div class="col">Invites sent: @Model.CountConfirmationMessageSent</div>
+    <div class="col">Confirmed: @Model.CountEnrollmentConfirmed</div>
+    <div class="col">Denied: @Model.CountEnrollmentDeclined</div>
+</div>
+
+@if(Model.Event.Guests.Count > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Enrollment Status</th>
+        </thead>
+        <tbody>
+            @foreach(var guest in Model.Event.Guests)
+            {
+                <tr>
+                    <td>@guest.Name</td>
+                    <td>@guest.Email</td>
+                    <td>@guest.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-primary" role="alert">
+        No guests found. Please invite at least one!
+    </div>
+}
+
+<br />
+
+<form class="fow g-3 align-items-center"  method="post" asp-action="AddGuest" asp-route-eventId="@Model.Event.EventId">
+    <div class="col-auto">
+        <label class="form-label" asp-for="Guest.Name">Name</label>
+        <span class="text-danger" asp-validation-for="Guest.Name"></span>
+    </div>
+
+    <div class="col-auto">
+        <input class="form-control" type="text" asp-for="Guest.Name" />
+    </div>
+
+    <div class="col-auto">
+        <label class="form-label" asp-for="Guest.Email">Email</label>
+        <span class="text-danger" asp-validation-for="Guest.Email"></span>
+    </div>
+
+    <div class="col-auto">
+        <input class="form-control" type="text" asp-for="Guest.Email" />
+    </div>
+
+    <div class="col-auto">
+        <input class="btn btn-primary" type="submit" value="Add Guest" />
+    </div>
+</form>
+
+<br />
+
+<form method="post asp-action=EnrollGuest" asp-route-eventId="@Model.Event.EventId">
+    <input class="btn btn-primary" type="submit" value="Send Confirmation Message" />
+</form>

@@ -1,0 +1,21 @@
+﻿@model EventViewModel
+
+@{
+    ViewData["Title"] = "Add a New Event";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="AllEvents">All Events</a>
+    <a asp-action="AddEvent">Add a New Event</a>
+    <a asp-action="ManageEvent" asp-route-eventId="1">Manage Event</a>
+</p>
+
+<form method="post" asp-action="AddEvent">
+    <div class="alert-danger" asp-validation-summary="ModelOnly"></div>
+    <partial name="_EventFormPartial"/>
+
+    <input class="btn btn-primary" type="submit" value="add" />
+    <a class="btn btn-secondary" role="button" asp-action="AllEvents">Cancel</a>
+</form>

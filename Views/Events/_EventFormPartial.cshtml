@@ -1,0 +1,34 @@
+﻿@model EventViewModel
+
+
+<div class="mb-3">
+    <label class="form-label" asp-for="Event.Name">Event Name</label>
+
+    <span class="text-danger" asp-validation-for="Event.Name"></span>
+
+    <input class="form-control" type="text" asp-for="Event.Name" />
+</div>
+
+<div class="mb-3">
+    <label class="form-label" asp-for="Event.Host">Event Host</label>
+
+    <span class="text-danger" asp-validation-for="Event.Host"></span>
+
+    <input class="form-control" type="text" asp-for="Event.Host" />
+</div>
+
+<div class="mb-3">
+    <label class="form-label" asp-for="Event.Date">Event Date</label>
+
+    <span class="text-danger" asp-validation-for="Event.Date"></span>
+
+    <input class="form-control" type="date" asp-for="Event.Date" />
+</div>
+
+<div class="mb-3">
+    <label class="form-label" asp-for="Event.RoomNum">Room Number</label>
+
+    <span class="text-danger" asp-validation-for="Event.RoomNum"></span>
+
+    <input class="form-control" type="text" asp-for="Event.RoomNum" />
+</div>

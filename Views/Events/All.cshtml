@@ -1,0 +1,52 @@
+﻿@model AllEventsViewModel
+
+@{
+    ViewData["Title"] = "All Events";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="AddEvent">Add a New Event</a>
+</p>
+
+@if (Model.Events.Count > 0)
+{
+    @if (TempData.Keys.Contains("message"))
+    {
+        <div class="alert alert-@TempData["className"] alert-dismissible fade show" role="alert">
+            @TempData["message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <table class="table table-striped-columns">
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Event Host</th>
+                <th>Event Date</th>
+               <th>Manage Event</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Event in Model.Events)
+            {
+
+                <tr>
+                    <td class="@Event.Name">@Event.Name</td>
+                    <td class="@Event.Host">@Event.Host</td>
+                    <td>@Event.Date.ToShortDateString()</td>
+                    <td>
+                        <a class="btn btn-primary" role="button" asp-action="ManageEvent" asp-route-eventId="@Event.EventId">Manage</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        There are no events in the system, <a asp-action="AddMeasurement">Add an event here</a>
+    </div>
+}
